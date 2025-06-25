@@ -1,0 +1,12 @@
+<h1>Books</h1>
+<label for="search">search: </label
+><input name="search" type="text" [(ngModel)]="searchQuery" />
+<button (click)="getSearchResults()">search</button>
+@if(books$| async; as books){ @if(books.length!==0){ @for (book of books; track
+$index) {
+<p>{{ book.title }}</p>
+} } @else {
+<p>nothing to show</p>
+} } @else {
+<p>loading...</p>
+}

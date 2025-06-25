@@ -1,23 +1,17 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Book } from '../../../../types/Book';
-import { BookService } from '../../../services/book.service';
-import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { BooksComponent } from '../../books/books.component';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [AsyncPipe, FormsModule],
+  imports: [FormsModule, BooksComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent {
-  books$!: Observable<Book[]>;
-  searchQuery: string = '';
-  constructor(private bookService: BookService) {
-    this.books$ = this.bookService.getAllBooks();
-  }
-  getSearchResults() {
-    this.books$ = this.bookService.search(this.searchQuery);
+  constructor(private authService: AuthService) {}
+  logout() {
+    this.authService.logout();
   }
 }

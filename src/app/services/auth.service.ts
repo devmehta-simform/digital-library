@@ -4,12 +4,13 @@ import { environment } from '../../environments/environment';
 import { Roles } from '../../types/roles';
 import { AuthResponse } from '../../types/authResponse';
 import { switchMap, take, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private router: Router) {}
 
   login(userRole: Roles) {
     return this.httpClient
@@ -27,5 +28,10 @@ export class AuthService {
             .pipe(take(1));
         })
       );
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['']);
   }
 }
