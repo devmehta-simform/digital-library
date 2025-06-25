@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Book } from '../../types/Book';
-import { take } from 'rxjs';
+import { debounce, debounceTime, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,14 +18,16 @@ export class BookService {
     });
   }
   search(searchQuery: string) {
-    return this.httpClient.get<Book[]>(
-      environment.SERVER_URL + `/books?title_like=${searchQuery}`,
-      {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem('token')!}`,
-        },
-      }
-    );
+    return this.httpClient
+      .get<Book[]>(
+        environment.SERVER_URL + `/books?title_like=${searchQuery}`,
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')!}`,
+          },
+        }
+      )
+      .pipe(debounceTime(2000));
   }
 
   create(book: { author: string; availability: boolean; title: string }) {

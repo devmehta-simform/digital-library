@@ -13,11 +13,13 @@ import { FormsModule } from '@angular/forms';
 })
 export class BooksComponent {
   books$!: Observable<Book[]>;
-  searchQuery: string = '';
   constructor(private bookService: BookService) {
     this.books$ = this.bookService.getAllBooks();
   }
-  getSearchResults() {
-    this.books$ = this.bookService.search(this.searchQuery);
+  getSearchResults(event: Event) {
+    const target = event.target;
+    if (target instanceof HTMLInputElement) {
+      this.books$ = this.bookService.search(target.value);
+    }
   }
 }
