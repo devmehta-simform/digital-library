@@ -1,22 +1,32 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { AuthService } from './services/auth.service';
+import { Roles } from '../types/roles';
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'digital-library';
 
+  constructor(private authService: AuthService, private router: Router) {}
+
   loginAsLibrarian() {
-    alert('You expect too much! Implement login as Librarian yourself!');
-    // Add navigation logic here
+    this.authService.login(Roles.LIBRARIAN).subscribe((data) => {
+      if (data.role === Roles.LIBRARIAN) {
+        this.router.navigate(['librarian']);
+      }
+    });
   }
 
   loginAsUser() {
-    alert('You expect too much! Implement login as User yourself!');
-    // Add navigation logic here
+    this.authService.login(Roles.USER).subscribe((data) => {
+      if (data.role === Roles.USER) {
+        this.router.navigate(['dashboard']);
+      }
+    });
   }
 }
