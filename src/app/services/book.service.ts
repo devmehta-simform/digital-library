@@ -16,4 +16,14 @@ export class BookService {
       },
     });
   }
+  search(searchQuery: string) {
+    return this.httpClient.get<Book[]>(
+      environment.SERVER_URL + `/books?title_like=${searchQuery}`,
+      {
+        headers: {
+          authorization: localStorage.getItem('token')!,
+        },
+      }
+    );
+  }
 }

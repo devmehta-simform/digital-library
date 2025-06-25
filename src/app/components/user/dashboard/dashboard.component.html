@@ -1,3 +1,10 @@
-@if(books$|async; as books) { @for (book of books; track $index) {
+@if(books$|async; as books) {
+<h1>Books</h1>
+<label for="search">search: </label
+><input name="search" type="text" [(ngModel)]="searchQuery" />
+<button (click)="getSearchResults()">search</button>
+@for (book of books; track $index) {
 <p>{{ book.title }}</p>
-} }
+} } @else {
+<p>loading...</p>
+}
