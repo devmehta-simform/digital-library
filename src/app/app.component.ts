@@ -11,22 +11,6 @@ import { Roles } from '../types/roles';
 })
 export class AppComponent {
   title = 'digital-library';
-
-  constructor(private authService: AuthService, private router: Router) {}
-
-  loginAsLibrarian() {
-    this.authService.login(Roles.LIBRARIAN).subscribe((data) => {
-      if (data.role === Roles.LIBRARIAN) {
-        this.router.navigate(['librarian']);
-      }
-    });
-  }
-
-  loginAsUser() {
-    this.authService.login(Roles.USER).subscribe((data) => {
-      if (data.role === Roles.USER) {
-        this.router.navigate(['dashboard']);
-      }
-    });
-  }
+  token = localStorage.getItem('token');
+  // TODO: guards
 }
