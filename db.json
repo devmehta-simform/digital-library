@@ -43,6 +43,30 @@
       "title": "The Catcher in the Rye",
       "author": "J.D. Salinger",
       "available": false
+    },
+    {
+      "title": "New Book Title",
+      "author": "Author Name",
+      "available": true,
+      "id": 6
+    },
+    {
+      "title": "New Book Title",
+      "author": "Author Name",
+      "available": true,
+      "id": 7
+    },
+    {
+      "title": "cds",
+      "availability": true,
+      "author": "csd",
+      "id": 8
+    },
+    {
+      "title": "cds",
+      "availability": true,
+      "author": "csd",
+      "id": 9
     }
   ]
 }

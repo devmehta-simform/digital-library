@@ -1,0 +1,21 @@
+<form [formGroup]="bookForm">
+  <label for="title">title: </label>
+  <input [formControl]="bookForm.controls.title" name="title" type="text" />
+  <br />
+  <label for="author">author: </label>
+  <input
+    [formControl]="bookForm.controls.author"
+    name="author"
+    type="text"
+  /><br />
+  <label for="availability">availability</label>
+  <select
+    [formControl]="bookForm.controls.availability"
+    name="availability"
+    id=""
+  >
+    <option value="true">true</option>
+    <option value="false">false</option></select
+  ><br />
+  <button (click)="submit()">save</button>
+</form>
