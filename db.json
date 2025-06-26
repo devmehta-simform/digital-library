@@ -45,28 +45,16 @@
       "available": false
     },
     {
-      "title": "New Book Title",
-      "author": "Author Name",
-      "available": true,
+      "title": "dfc",
+      "availability": true,
+      "author": "cfd",
       "id": 6
     },
     {
-      "title": "New Book Title",
-      "author": "Author Name",
-      "available": true,
+      "title": "Customer Creative Architect",
+      "availability": "false",
+      "author": "Harum quis corporis facere illo.",
       "id": 7
-    },
-    {
-      "title": "cds",
-      "availability": true,
-      "author": "csd",
-      "id": 8
-    },
-    {
-      "title": "cds",
-      "availability": true,
-      "author": "csd",
-      "id": 9
     }
   ]
 }

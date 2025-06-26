@@ -1,5 +1,9 @@
 <h1>Librarian Dashboard</h1>
 <button (click)="logout()">logout</button>
+<button (click)="bookAdd = !bookAdd">Add Book</button>
+@if(bookAdd){
+<app-add-book-form (create)="handleBookCreation($event)" />
+}
 <h2>Books</h2>
 @if(books$|async; as books){<app-books [books]="books" />}@else{
 <p>loading...</p>

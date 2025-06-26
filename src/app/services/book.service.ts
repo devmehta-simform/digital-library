@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Book } from '../../types/Book';
-import { debounce, debounceTime, take } from 'rxjs';
+import { debounce, debounceTime, switchMap, take, tap } from 'rxjs';
+import { BookCreateDTO } from '../../types/bookCreateDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -18,19 +19,17 @@ export class BookService {
     });
   }
   search(searchQuery: string) {
-    return this.httpClient
-      .get<Book[]>(
-        environment.SERVER_URL + `/books?title_like=${searchQuery}`,
-        {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem('token')!}`,
-          },
-        }
-      )
-      .pipe(debounceTime(2000));
+    return this.httpClient.get<Book[]>(
+      environment.SERVER_URL + `/books?title_like=${searchQuery}`,
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')!}`,
+        },
+      }
+    );
   }
 
-  create(book: { author: string; availability: boolean; title: string }) {
+  create(book: BookCreateDTO) {
     return this.httpClient
       .post(
         environment.SERVER_URL + `/books`,
@@ -41,6 +40,11 @@ export class BookService {
           },
         }
       )
-      .pipe(take(1));
+      .pipe(
+        take(1),
+        switchMap(() => {
+          return this.getAllBooks().pipe(take(1));
+        })
+      );
   }
 }

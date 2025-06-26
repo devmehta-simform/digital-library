@@ -1,12 +1,12 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
-import { BookService } from '../../services/book.service';
-import { tap } from 'rxjs';
+import { BookCreateDTO } from '../../../types/bookCreateDTO';
 
 @Component({
   selector: 'app-add-book-form',
@@ -15,16 +15,31 @@ import { tap } from 'rxjs';
   styleUrl: './add-book-form.component.scss',
 })
 export class AddBookFormComponent {
-  create = new EventEmitter<void>();
+  @Output() create = new EventEmitter<BookCreateDTO>();
   bookForm = new FormGroup({
-    title: new FormControl('', { nonNullable: true }),
-    availability: new FormControl(true, { nonNullable: true }),
-    author: new FormControl('', { nonNullable: true }),
+    title: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    availability: new FormControl(true, {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    author: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
   });
 
-  constructor(private booksService: BookService) {}
+  constructor() {}
 
   submit() {
-    this.booksService.create(this.bookForm.getRawValue()).subscribe();
+    // console.log(this.bookForm.invalid);
+    if (this.bookForm.invalid) {
+      this.bookForm.markAllAsTouched();
+    } else {
+      this.create.emit(this.bookForm.getRawValue());
+      this.bookForm.reset();
+    }
   }
 }

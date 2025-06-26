@@ -1,13 +1,20 @@
-<form [formGroup]="bookForm">
+<form [formGroup]="bookForm" (ngSubmit)="submit()">
   <label for="title">title: </label>
   <input [formControl]="bookForm.controls.title" name="title" type="text" />
+  @if((bookForm.controls.title.touched || bookForm.controls.title.dirty) &&
+  bookForm.controls.title.invalid){
+  <span>*required</span>
+  }
   <br />
   <label for="author">author: </label>
   <input
     [formControl]="bookForm.controls.author"
     name="author"
     type="text"
-  /><br />
+  />@if((bookForm.controls.author.touched || bookForm.controls.author.dirty) &&
+  bookForm.controls.author.invalid){
+  <span>*required</span>
+  }<br />
   <label for="availability">availability</label>
   <select
     [formControl]="bookForm.controls.availability"
@@ -17,5 +24,5 @@
     <option value="true">true</option>
     <option value="false">false</option></select
   ><br />
-  <button (click)="submit()">save</button>
+  <button>save</button>
 </form>
