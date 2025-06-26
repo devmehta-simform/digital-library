@@ -1,8 +1,0 @@
-<button (click)="logout()">logout</button>
-<button (click)="addBook = !addBook">
-  {{ addBook ? "close" : "add Book" }}
-</button>
-@if(addBook) {
-<app-add-book-form (create)="handleCreation()" />
-}
-<app-books />

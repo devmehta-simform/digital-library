@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Roles } from '../../types/roles';
 import { AuthResponse } from '../../types/authResponse';
-import { switchMap, take, tap } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -27,6 +27,19 @@ export class AuthService {
             })
             .pipe(take(1));
         })
+      );
+  }
+
+  getRole() {
+    return this.httpClient
+      .get<AuthResponse>(environment.SERVER_URL + '/me', {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')!}`,
+        },
+      })
+      .pipe(
+        take(1),
+        map((data) => data.role)
       );
   }
 
