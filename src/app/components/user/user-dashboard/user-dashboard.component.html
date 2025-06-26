@@ -1,5 +1,12 @@
 <h1>User Dashboard</h1>
 <h2>Books</h2>
+<label for="search">search: </label>
+<input
+  type="text"
+  name="search"
+  (keyup)="search($event)"
+  placeholder="harry potter"
+/>
 @if(books$|async; as books){<app-books [books]="books" />}@else{
 <p>loading...</p>
 }

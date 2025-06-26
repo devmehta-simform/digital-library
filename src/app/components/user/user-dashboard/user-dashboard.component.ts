@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, debounceTime, mergeMap, Observable } from 'rxjs';
 import { Book } from '../../../../types/Book';
 import { BookService } from '../../../services/book.service';
 import { BooksComponent } from '../../shared/books/books.component';
@@ -13,7 +13,20 @@ import { AsyncPipe } from '@angular/common';
 })
 export class UserDashboardComponent {
   books$: Observable<Book[]>;
+  search$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
   constructor(private bookService: BookService) {
     this.books$ = this.bookService.getAllBooks();
+    this.books$ = this.search$.pipe(
+      debounceTime(500),
+      mergeMap((searchQuery) => {
+        return this.bookService.search(searchQuery);
+      })
+    );
+  }
+
+  search(event: Event) {
+    const el = event.target;
+    if (el instanceof HTMLInputElement) this.search$.next(el.value);
   }
 }
