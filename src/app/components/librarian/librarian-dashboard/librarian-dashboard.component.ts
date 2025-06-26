@@ -4,6 +4,7 @@ import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Book } from '../../../../types/Book';
 import { BookService } from '../../../services/book.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-librarian-dashboard',
@@ -13,7 +14,15 @@ import { BookService } from '../../../services/book.service';
 })
 export class LibrarianDashboardComponent {
   books$: Observable<Book[]>;
-  constructor(private bookService: BookService) {
+
+  constructor(
+    private bookService: BookService,
+    private authService: AuthService
+  ) {
     this.books$ = this.bookService.getAllBooks();
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }
