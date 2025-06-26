@@ -1,1 +1,5 @@
-<p>user-dashboard works!</p>
+<h1>User Dashboard</h1>
+<h2>Books</h2>
+@if(books$|async; as books){<app-books [books]="books" />}@else{
+<p>loading...</p>
+}
